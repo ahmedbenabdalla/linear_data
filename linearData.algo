@@ -1,0 +1,96 @@
+ALGORITHM algorithm_name
+VAR
+    size:INTEGER
+    sum:INTEGER
+    i:INTEGER
+    j:INTEGER
+    tab1: ARRAY_OF INTEGER[size];
+    tab2: ARRAY_OF INTEGER[size];
+    exist:BOOLEAN
+    identical:ARRAY_OF INTEGER[50]
+BEGIN
+    Write("put the size of tables");
+    Read(size);
+    FOR i FROM 0 TO size-1 STEP step  DO
+        Write("enter tab1["+i+"]");
+        Read(tab1[i]);
+        Write("enter tab2["+i+"]");
+        Read(tab2[i]);
+    END_FOR
+    FOR i FROM 0 TO tab1.length STEP step  DO
+       exist:=False
+       FOR j FROM 0 TO tab2.length STEP step  DO
+           IF (tab1[i]==tab2[j]) THEN
+               exist:=True;
+               identical.insert(tab1[i])
+               break;
+           END_IF
+       END_FOR 
+       IF (exist) THEN
+           sum:=sum+tab1[i]
+       END_IF
+    END_FOR
+    FOR i FROM 0 TO tab2.length STEP step  DO
+       exist:=False
+       FOR j FROM 0 TO tab1.length STEP step  DO
+           IF (tab1[i]==tab2[j]) THEN
+               identical.insert(tab2[i]);
+               exist:=True;
+               break;
+           END_IF
+       END_FOR 
+       IF (exist) THEN
+           sum:=sum+tab2[i]
+       END_IF
+    END_FOR
+END
+//solution avec javascript
+function linearData(arr1,arr2)
+{
+  let sum=0
+  let exist
+  let identical=[]
+  for(let val1 of arr1)
+  {
+   exist=false
+   for(let val2 of arr2)
+   {
+     if(val1===val2)
+     {
+        exist=true
+        break;
+     }
+   }
+   if(!exist)
+   {
+     sum+=val1
+   }
+  }
+  for(let val1 of arr2)
+  {
+   exist=false
+   for(let val2 of arr1)
+   {
+     if(val1===val2)
+     {
+        identical.push(val1)
+        exist=true
+        break;
+     }
+   }
+   if(!exist)
+   {
+     sum+=val1
+   }
+  }
+  return {"total superposer":sum,"valeur identique":identical}
+}
+console.log(linearData( [3, 1, 7, 9],[2, 4, 1, 9, 3]))
+
+//solution ES6
+const linearData=(arr1,arr2)=>{
+  let sum=arr1.filter(val=> !arr2.includes(val)).concat(arr2.filter(val=> !arr1.includes(val))).reduce((a,b)=>a+b)
+  let identical=Array.from(arr1.filter(val=> arr2.includes(val)))
+  return {"sum":sum,"identical":identical};
+}
+console.log(linearData( [3, 1, 7, 9],[2, 4, 1, 9, 3]))

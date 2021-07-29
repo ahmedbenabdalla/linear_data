@@ -1,0 +1,61 @@
+ALGORITHM linear_data_obj
+VAR
+    htab:HASH_TABLE<INTEGER,INTEGER>;
+    i:INTEGER;
+    j:INTEGER;
+    sum:INTEGER
+    size:INTEGER;
+    identical:ARRAY_OF INTEGER[50]
+    tab1: ARRAY_OF INTEGER[size*2];
+    tab2: ARRAY_OF INTEGER[size];
+BEGIN
+    Write("put the size of tables");
+    Read(size);
+    FOR i FROM 0 TO size-1 STEP step  DO
+        Write("enter tab1["+i+"]");
+        Read(tab1[i]);
+        Write("enter tab2["+i+"]");
+        Read(tab2[i]);
+    END_FOR
+    FOR i FROM 0 TO tab1.length STEP step  DO
+        tab1[size+i]=tab2[i]
+    END_FOR
+    sum:=0;
+    FOR i FROM 0 TO size-1 STEP step  DO
+        VAR exist:=htab.get(tab1[i];
+        IF (exist>0) THEN
+             htab.delete(tab1[i]);
+             htab.insert(tab1[i],2);
+             identical.insert(tab1[i]);
+             sum:=sum-tab1[i];
+        ELSE
+            htab.insert(tab1[i],1);
+            sum:=sum+tab1[i];
+        END_IF
+    END_FOR
+END
+//solution JS
+function linearDataObj(arr1,arr2)
+{
+  let identical=[];
+  let sum = 0;
+  let array=arr1.concat(arr2);
+  let obj = {};
+  for(let val of array)
+  {
+     if(obj[val])
+     {
+         obj[val]++;
+         identical.push(val)
+         sum-=val;
+     } 
+     else
+     {
+        obj[val]=1;
+        sum+=val;
+     }            
+  }
+  return {'sum':sum,'identical':identical}
+}
+console.log(linearDataObj( [3, 1, 7, 9],[2, 4, 1, 9, 3]))
+
